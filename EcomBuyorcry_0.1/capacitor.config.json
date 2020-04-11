@@ -1,0 +1,8 @@
+{
+  "appId": "io.ionic.starter",
+  "appName": "EcomBuyorcry_0.1",
+  "bundledWebRuntime": false,
+  "npmClient": "npm",
+  "webDir": "www",
+  "cordova": {}
+}

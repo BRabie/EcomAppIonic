@@ -1,0 +1,7 @@
+{
+  "name": "EcomBuyorcry_0.1",
+  "integrations": {
+    "capacitor": {}
+  },
+  "type": "angular"
+}
