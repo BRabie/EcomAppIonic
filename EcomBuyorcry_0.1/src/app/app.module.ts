@@ -8,9 +8,13 @@ import { StatusBar } from '@ionic-native/status-bar/ngx';
 
 import { AppComponent } from './app.component';
 import { AppRoutingModule } from './app-routing.module';
+import { ListeBusinessAccountPage } from './liste-business-account/liste-business-account.page';
 
 @NgModule({
-  declarations: [AppComponent],
+  declarations: [
+    AppComponent
+    
+  ],
   entryComponents: [],
   imports: [
     BrowserModule,
@@ -22,6 +26,9 @@ import { AppRoutingModule } from './app-routing.module';
     SplashScreen,
     { provide: RouteReuseStrategy, useClass: IonicRouteStrategy }
   ],
-  bootstrap: [AppComponent]
+  bootstrap: [
+    AppComponent
+    
+  ]
 })
 export class AppModule {}

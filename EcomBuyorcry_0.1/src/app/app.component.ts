@@ -1,8 +1,9 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 
 import { Platform } from '@ionic/angular';
 import { SplashScreen } from '@ionic-native/splash-screen/ngx';
 import { StatusBar } from '@ionic-native/status-bar/ngx';
+import { ListeBusinessAccountPage } from './liste-business-account/liste-business-account.page';
 
 @Component({
   selector: 'app-root',
@@ -10,6 +11,8 @@ import { StatusBar } from '@ionic-native/status-bar/ngx';
   styleUrls: ['app.component.scss']
 })
 export class AppComponent implements OnInit {
+
+
   public selectedIndex = 0;
   public appPages = [
     {
@@ -43,6 +46,14 @@ export class AppComponent implements OnInit {
       icon: 'warning'
     }
   ];
+
+  pages = [
+
+    { title: "Générale", component: ListeBusinessAccountPage },
+    { title: "Ad Set", component: ListeBusinessAccountPage },
+    { title: "Configuration", component: ListeBusinessAccountPage }
+
+  ];
   public labels = ['Family', 'Friends', 'Notes', 'Work', 'Travel', 'Reminders'];
 
   constructor(
@@ -66,4 +77,8 @@ export class AppComponent implements OnInit {
       this.selectedIndex = this.appPages.findIndex(page => page.title.toLowerCase() === path.toLowerCase());
     }
   }
+
+
+
+
 }

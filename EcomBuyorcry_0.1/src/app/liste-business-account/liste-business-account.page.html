@@ -1,0 +1,30 @@
+<ion-header [translucent]="true">
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-menu-button></ion-menu-button>
+    </ion-buttons>
+    <ion-title>Liste Ad Account </ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+
+  <ion-list>
+
+    <ion-list-header lines="inset">
+      <ion-label>New This Week</ion-label>
+      <ion-button>See All</ion-button>
+    </ion-list-header>
+
+    <ion-item *ngFor="let item of [1,2,3,4]"   (click)="test()">
+      <ion-label>Pokémon Yellow</ion-label>
+      <ion-icon name="glasses" (click)="test()" item-end></ion-icon>
+    </ion-item>
+    <!--button ion-item *ngFor="let item of [1,2,3,4]"   (click)="test()">
+      item No : {{item}}
+      <p>Nombre chantier : {{item}}</p>
+      <button ion-button clear item-end  (click)="test()">Détail</button>
+    </button-->
+  </ion-list>
+
+</ion-content>
