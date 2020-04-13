@@ -8,11 +8,17 @@
 </ion-header>
 
 <ion-content>
+  <p>{{message}}</p>
+  
+  <ion-button shape="round" (click)="facebookLogin()">
+    <ion-icon slot="start" name="logo-facebook"></ion-icon>
+    Connexion avec Facebook
+  </ion-button>
 
   <ion-list>
 
     <ion-list-header lines="inset">
-      <ion-label>New This Week</ion-label>
+      <ion-label>{{message}}</ion-label>
       <ion-button>See All</ion-button>
     </ion-list-header>
 

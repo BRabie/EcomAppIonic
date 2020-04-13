@@ -4,6 +4,8 @@ import { Platform } from '@ionic/angular';
 import { SplashScreen } from '@ionic-native/splash-screen/ngx';
 import { StatusBar } from '@ionic-native/status-bar/ngx';
 import { ListeBusinessAccountPage } from './liste-business-account/liste-business-account.page';
+import { UtilisateurService } from './services/utilisateur.service';
+import {Subscription} from "rxjs";
 
 @Component({
   selector: 'app-root',
@@ -11,6 +13,8 @@ import { ListeBusinessAccountPage } from './liste-business-account/liste-busines
   styleUrls: ['app.component.scss']
 })
 export class AppComponent implements OnInit {
+
+
 
 
   public selectedIndex = 0;
@@ -54,20 +58,37 @@ export class AppComponent implements OnInit {
     { title: "Configuration", component: ListeBusinessAccountPage }
 
   ];
+
   public labels = ['Family', 'Friends', 'Notes', 'Work', 'Travel', 'Reminders'];
+
+  public utilisateurSubscription : Subscription;
+  public utilisateur : any;
 
   constructor(
     private platform: Platform,
     private splashScreen: SplashScreen,
-    private statusBar: StatusBar
+    private statusBar: StatusBar,
+    public utilisateurProvider: UtilisateurService
   ) {
     this.initializeApp();
+    
+    this.utilisateurSubscription = this.utilisateurProvider.utilisateur$.subscribe(
+
+      (utilisateurImported : any) => {
+        this.utilisateur = utilisateurImported;
+        console.log(this.utilisateur);
+
+      }
+
+    );
   }
 
   initializeApp() {
     this.platform.ready().then(() => {
       this.statusBar.styleDefault();
       this.splashScreen.hide();
+
+      
     });
   }
 
