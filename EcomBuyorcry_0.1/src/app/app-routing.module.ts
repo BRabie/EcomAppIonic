@@ -14,6 +14,10 @@ const routes: Routes = [
   {
     path: 'liste-business-account',
     loadChildren: () => import('./liste-business-account/liste-business-account.module').then( m => m.ListeBusinessAccountPageModule)
+  },
+  {
+    path: 'liste-campagne',
+    loadChildren: () => import('./liste-campagne/liste-campagne.module').then( m => m.ListeCampagnePageModule)
   }
 ];
 

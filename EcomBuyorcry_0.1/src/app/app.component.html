@@ -4,10 +4,14 @@
       <ion-content>
 
         <ion-item>
-          <ion-avatar slot="start">
-            <img *ngIf="utilisateur" [src]="utilisateur['user']['photoURL']">
+          <ion-avatar *ngIf="utilisateur" slot="start">
+            <img [src]="utilisateur['user']['photoURL']">
           </ion-avatar>
           <ion-label *ngIf="utilisateur" >{{utilisateur['user']['displayName']}}</ion-label>
+          <ion-button *ngIf="!utilisateur"  shape="round" (click)="facebookLogin()">
+            <ion-icon slot="start" name="logo-facebook"></ion-icon>
+            Connexion avec Facebooook
+          </ion-button>
         </ion-item>
 
         <ion-list id="inbox-list">

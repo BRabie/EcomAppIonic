@@ -1,15 +1,16 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { LoadingController } from '@ionic/angular';
+import { LoadingController, NavController } from '@ionic/angular';
 import { Platform } from '@ionic/angular';
 import { AngularFireDatabase } from '@angular/fire/database';
 import { AngularFireAuth } from '@angular/fire/auth';
 import * as firebase from 'firebase/app';
 import { Facebook , FacebookLoginResponse } from '@ionic-native/facebook/ngx';
 
-import { HttpClient, HttpHeaders, HttpErrorResponse  } from  '@angular/common/http';
 import {Subscription} from "rxjs";
 import { UtilisateurService } from '../services/utilisateur.service';
+import { HttpClient } from '@angular/common/http';
+import { ListeCampagnePage } from '../liste-campagne/liste-campagne.page';
 
 
 @Component({
@@ -25,13 +26,16 @@ export class ListeBusinessAccountPage implements OnInit {
   public utilisateurSubscription : Subscription;
   public utilisateur : any;
 
+  public data = [];
+  public getRequest = "me/adaccounts?fields=name";
+
+  public pushPage = ListeCampagnePage;
+
   constructor(
-        public afDB: AngularFireDatabase,
-        public afAuth: AngularFireAuth,
-        private fb: Facebook,
-        public platform: Platform,
-        private http: HttpClient,
-        public utilisateurProvider: UtilisateurService
+        public navCtrl: NavController, 
+        public utilisateurProvider: UtilisateurService,
+        public http :HttpClient,
+        public router:Router
       ) 
   {
     this.providerFb = new firebase.auth.FacebookAuthProvider();
@@ -41,7 +45,7 @@ export class ListeBusinessAccountPage implements OnInit {
       (utilisateurImported : any) => {
         this.utilisateur = utilisateurImported;
         console.log(this.utilisateur);
-
+        this.getData();
       }
 
     );
@@ -51,12 +55,36 @@ export class ListeBusinessAccountPage implements OnInit {
 
   }
 
+  public refresh(){
+    this.utilisateurProvider.emitUtilisateur();
+  }
+
+  getData(){
+    //this.utilisateurProvider.emitUtilisateur();
+    this.http.get('https://graph.facebook.com/v6.0/'+this.getRequest+'&access_token='+ this.utilisateur['credential']['accessToken'])
+    .subscribe(response => {
+      console.log(response);
+      this.data = response["data"];
+    });
+  }
+
   facebookLogin() {
 
     console.log("rrr"); 
     this.utilisateurProvider.connection();
-    
+
   } 
+
+  itemTapped(event, item) {
+
+    this.utilisateur["adaccount"] = item;
+    this.utilisateurProvider.updateUtilisateur(this.utilisateur);
+    this.navCtrl.navigateForward("liste-campagne");
+
+
+
+
+  }
 
 
 }

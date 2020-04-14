@@ -63,6 +63,7 @@ export class AppComponent implements OnInit {
 
   public utilisateurSubscription : Subscription;
   public utilisateur : any;
+  public photoUser = "";
 
   constructor(
     private platform: Platform,
@@ -76,6 +77,9 @@ export class AppComponent implements OnInit {
 
       (utilisateurImported : any) => {
         this.utilisateur = utilisateurImported;
+        if(this.utilisateur && this.utilisateur["user"]){
+          this.photoUser = this.utilisateur["user"]["photoURL"];
+        }
         console.log(this.utilisateur);
 
       }
@@ -98,6 +102,14 @@ export class AppComponent implements OnInit {
       this.selectedIndex = this.appPages.findIndex(page => page.title.toLowerCase() === path.toLowerCase());
     }
   }
+
+
+  facebookLogin() {
+
+    console.log("rrr"); 
+    this.utilisateurProvider.connection();
+
+  } 
 
 
 

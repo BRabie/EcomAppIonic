@@ -15,6 +15,8 @@ import { AngularFireDatabaseModule } from '@angular/fire/database';
 import { AngularFireAuthModule } from '@angular/fire/auth';
 import { AngularFireStorageModule } from '@angular/fire/storage';
 import { HttpClientModule } from '@angular/common/http';
+import { NativeStorage } from '@ionic-native/native-storage/ngx';
+import { ListeCampagnePage } from './liste-campagne/liste-campagne.page';
 
 export const firebaseConfig = 
 {
@@ -44,12 +46,15 @@ export const firebaseConfig =
     AngularFireAuthModule,
     AngularFireStorageModule,
     HttpClientModule
+    
   ],
   providers: [
     StatusBar,
     SplashScreen,
     { provide: RouteReuseStrategy, useClass: IonicRouteStrategy },
-    Facebook
+    Facebook,
+    NativeStorage
+    
 
 
   ],
