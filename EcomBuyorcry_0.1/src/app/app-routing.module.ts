@@ -4,7 +4,7 @@ import { PreloadAllModules, RouterModule, Routes } from '@angular/router';
 const routes: Routes = [
   {
     path: '',
-    redirectTo: 'folder/Inbox',
+    redirectTo: 'liste-business-account',
     pathMatch: 'full'
   },
   {
@@ -18,6 +18,14 @@ const routes: Routes = [
   {
     path: 'liste-campagne',
     loadChildren: () => import('./liste-campagne/liste-campagne.module').then( m => m.ListeCampagnePageModule)
+  },
+  {
+    path: 'liste-ad-set',
+    loadChildren: () => import('./liste-ad-set/liste-ad-set.module').then( m => m.ListeAdSetPageModule)
+  },
+  {
+    path: 'ad-interest-search',
+    loadChildren: () => import('./ad-interest-search/ad-interest-search.module').then( m => m.AdInterestSearchPageModule)
   }
 ];
 

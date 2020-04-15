@@ -13,7 +13,7 @@
   <ion-list>
 
     <ion-list-header lines="inset">
-      <ion-label style="font-weight: bolder;font-size: large;">Campaigns:</ion-label>
+      <ion-label style="font-weight: bolder;font-size: large;">Ad Sets:</ion-label>
       <ion-button (click)="refresh()">REFRESH</ion-button>
     </ion-list-header>
 
@@ -26,6 +26,7 @@
         <p>ID : {{item.id}}</p>
         <p>Status : {{item.status}}</p>
         <p>Budget : {{item.daily_budget}}</p>
+        <p>Start : {{item.start_time}}</p>
       </ion-label>
 
     </ion-item>

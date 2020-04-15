@@ -1,20 +1,20 @@
 import { Component, OnInit, Inject } from '@angular/core';
-import { NavParams,NavController } from '@ionic/angular';
+import { NavParams ,NavController} from '@ionic/angular';
 import { UtilisateurService } from '../services/utilisateur.service';
 import { Subscription } from 'rxjs';
 import { HttpClient } from '@angular/common/http';
 
 @Component({
-  selector: 'app-liste-campagne',
-  templateUrl: './liste-campagne.page.html',
-  styleUrls: ['./liste-campagne.page.scss'],
+  selector: 'app-ad-interest-search',
+  templateUrl: './ad-interest-search.page.html',
+  styleUrls: ['./ad-interest-search.page.scss'],
 })
-export class ListeCampagnePage implements OnInit {
+export class AdInterestSearchPage implements OnInit {
 
   public utilisateurSubscription : Subscription;
   public utilisateur : any;
   public data = [];
-  public getRequest = "/campaigns?date_format=U&fields=status,objective,name,start_time,created_time,daily_budget,end_time,configured_status,effective_status,campaign_id";
+  public getRequest = "/adsets?fields=id,bid_adjustments,bid_amount,bid_strategy,configured_status,daily_budget,name,optimization_goal,status,start_time";
 
   constructor(
     public http :HttpClient,
@@ -27,7 +27,6 @@ export class ListeCampagnePage implements OnInit {
         (utilisateurImported : any) => {
           this.utilisateur = utilisateurImported;
           console.log(this.utilisateur);
-          this.getData();
         }
 
       );
@@ -38,14 +37,26 @@ export class ListeCampagnePage implements OnInit {
   ngOnInit() {
   }
 
+  //fonction necessaire pour le filtre des fournisseurs
+  getItems(ev) {
+    // set val to the value of the ev target
+    var val = ev.target.value;
+    console.log(val);
+
+    // if the value is an empty string don't filter the items
+    if (val && val.trim() != '') {
+      this.getData( JSON.stringify([val]) );
+    }
+  }
+
   public refresh(){
     this.utilisateurProvider.emitUtilisateur();
   }
 
-  getData(){
+  getData(listInterests : string){
   
     //this.utilisateurProvider.emitUtilisateur();
-    this.http.get('https://graph.facebook.com/v6.0/'+this.utilisateur["adaccount"]["id"]+this.getRequest+'&access_token='+ this.utilisateur['credential']['accessToken'])
+    this.http.get('https://graph.facebook.com/search?type=adinterestsuggestion&limit=1000&locale=en_US&interest_list='+listInterests+'&access_token='+ this.utilisateur['credential']['accessToken'])
     .subscribe(response => {
       console.log(response);
       this.data = response["data"];
@@ -54,10 +65,11 @@ export class ListeCampagnePage implements OnInit {
 
   itemTapped(event, item) {
 
-    this.utilisateur["campaign"] = item;
+    this.utilisateur["adset"] = item;
     this.utilisateurProvider.updateUtilisateur(this.utilisateur);
-    this.navCtrl.navigateForward("liste-ad-set");
+    //this.navCtrl.navigateForward("liste-adset");
 
   }
+
 
 }

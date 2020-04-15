@@ -1,0 +1,35 @@
+<ion-header [translucent]="true">
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-menu-button></ion-menu-button>
+    </ion-buttons>
+    <ion-title>Interest search</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+
+  <ion-header translucent>
+
+    <ion-toolbar>
+      <ion-searchbar  (ionInput)="getItems($event)"></ion-searchbar>
+    </ion-toolbar>
+  </ion-header>
+
+  <ion-content fullscreen>
+    <ion-list>
+      <ion-item *ngFor="let item of data" (click)="itemTapped($event, item)" >
+        <ion-avatar slot="start">
+          <img src="https://gravatar.com/avatar/dba6bae8c566f9d4041fb9cd9ada7741?d=identicon&f=y">
+        </ion-avatar>
+        <ion-label>
+          <h3>Name : {{item.name}} </h3>
+          <p>ID : {{item.id}}</p>
+          <p>Audience size : {{item.audience_size}}</p>
+        </ion-label>
+  
+      </ion-item>
+
+    </ion-list>
+
+</ion-content>

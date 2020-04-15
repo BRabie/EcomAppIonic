@@ -1,20 +1,21 @@
 import { Component, OnInit, Inject } from '@angular/core';
-import { NavParams,NavController } from '@ionic/angular';
+import { NavParams ,NavController} from '@ionic/angular';
 import { UtilisateurService } from '../services/utilisateur.service';
 import { Subscription } from 'rxjs';
 import { HttpClient } from '@angular/common/http';
 
+
 @Component({
-  selector: 'app-liste-campagne',
-  templateUrl: './liste-campagne.page.html',
-  styleUrls: ['./liste-campagne.page.scss'],
+  selector: 'app-liste-ad-set',
+  templateUrl: './liste-ad-set.page.html',
+  styleUrls: ['./liste-ad-set.page.scss'],
 })
-export class ListeCampagnePage implements OnInit {
+export class ListeAdSetPage implements OnInit {
 
   public utilisateurSubscription : Subscription;
   public utilisateur : any;
   public data = [];
-  public getRequest = "/campaigns?date_format=U&fields=status,objective,name,start_time,created_time,daily_budget,end_time,configured_status,effective_status,campaign_id";
+  public getRequest = "/adsets?fields=id,bid_adjustments,bid_amount,bid_strategy,configured_status,daily_budget,name,optimization_goal,status,start_time";
 
   constructor(
     public http :HttpClient,
@@ -45,7 +46,7 @@ export class ListeCampagnePage implements OnInit {
   getData(){
   
     //this.utilisateurProvider.emitUtilisateur();
-    this.http.get('https://graph.facebook.com/v6.0/'+this.utilisateur["adaccount"]["id"]+this.getRequest+'&access_token='+ this.utilisateur['credential']['accessToken'])
+    this.http.get('https://graph.facebook.com/v6.0/'+this.utilisateur["campaign"]["id"]+this.getRequest+'&access_token='+ this.utilisateur['credential']['accessToken'])
     .subscribe(response => {
       console.log(response);
       this.data = response["data"];
@@ -54,10 +55,9 @@ export class ListeCampagnePage implements OnInit {
 
   itemTapped(event, item) {
 
-    this.utilisateur["campaign"] = item;
+    this.utilisateur["adset"] = item;
     this.utilisateurProvider.updateUtilisateur(this.utilisateur);
-    this.navCtrl.navigateForward("liste-ad-set");
+    //this.navCtrl.navigateForward("liste-adset");
 
   }
-
 }
