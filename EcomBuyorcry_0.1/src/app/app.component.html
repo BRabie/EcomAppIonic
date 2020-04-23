@@ -4,21 +4,30 @@
       <ion-content>
 
         <ion-item>
-          <ion-avatar *ngIf="utilisateur" slot="start">
+          <ion-avatar *ngIf="utilisateur && utilisateur['user']" slot="start">
             <img [src]="utilisateur['user']['photoURL']">
           </ion-avatar>
-          <ion-label *ngIf="utilisateur" >{{utilisateur['user']['displayName']}}</ion-label>
-          <ion-button shape="round" (click)="facebookLogin()">
+          <ion-label *ngIf="utilisateur && utilisateur['user']" >{{utilisateur['user']['displayName']}}</ion-label>
+          <ion-button *ngIf="!(utilisateur && utilisateur['user'])" shape="round" (click)="facebookLogin()">
             <ion-icon slot="start" name="logo-facebook"></ion-icon>
             Connexion avec Facebooook
           </ion-button>
+
         </ion-item>
 
         <ion-list id="inbox-list">
           <ion-menu-toggle auto-hide="false" *ngFor="let p of appPages; let i = index">
-            <ion-item (click)="selectedIndex = i" routerDirection="root" [routerLink]="['/liste-business-account']" lines="none" detail="false" [class.selected]="selectedIndex == i">
+            <ion-item (click)="selectedIndex = i" routerDirection="root" [routerLink]="p.url" lines="none" detail="false" [class.selected]="selectedIndex == i">
               <ion-icon slot="start" [ios]="p.icon + '-outline'" [md]="p.icon + '-sharp'"></ion-icon>
               <ion-label>{{ p.title }}</ion-label>
+            </ion-item>
+
+
+          </ion-menu-toggle>
+          <ion-menu-toggle auto-hide="false">
+            <ion-item (click) = "facebookLogout()" routerDirection="root" routerLink="p.url"  lines="none" detail="false" *ngIf="utilisateur && utilisateur['user']" lines="none">
+              <ion-icon  slot="start" ios="log-out-outline" md="log-out-sharp"></ion-icon>
+              <ion-label>Log Out</ion-label>
             </ion-item>
           </ion-menu-toggle>
         </ion-list>
@@ -30,6 +39,7 @@
             <ion-icon slot="start" ios="bookmark-outline" md="bookmark-sharp"></ion-icon>
             <ion-label>{{ label }}</ion-label>
           </ion-item>
+
         </ion-list>
       </ion-content>
     </ion-menu>

@@ -1,0 +1,56 @@
+<ion-header [translucent]="true">
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-menu-button></ion-menu-button>
+    </ion-buttons>
+    <ion-title>Facebook Manager</ion-title>
+    <ion-buttons slot="end">
+      <ion-button (click)="createProduct()" color="success">New Product</ion-button>
+    </ion-buttons>
+
+    
+
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+
+
+  <ion-list>
+
+    <ion-list-header lines="inset">
+      <ion-label style="font-weight: bolder;font-size: large;">Ad Account:</ion-label>
+      <ion-button (click)="refresh()">REFRESH</ion-button>
+    </ion-list-header>
+
+
+
+    <ion-item-sliding *ngFor="let item of data" (click)="itemTapped($event, item)" >
+
+  
+      <ion-item >
+        <ion-avatar slot="start">
+          <img src="https://gravatar.com/avatar/dba6bae8c566f9d4041fb9cd9ada7741?d=identicon&f=y">
+        </ion-avatar>
+        <ion-label>
+          <h3>Name : {{item.name}}</h3>
+          <p>ID : {{item.id}}</p>
+        </ion-label>
+  
+      </ion-item>
+  
+      <ion-item-options side="end">
+        <ion-item-option (click)="unread(item)" color="danger">Delete</ion-item-option>
+      </ion-item-options>
+    </ion-item-sliding>
+  
+
+
+    <!--button ion-item *ngFor="let item of [1,2,3,4]"   (click)="test()">
+      item No : {{item}}
+      <p>Nombre chantier : {{item}}</p>
+      <button ion-button clear item-end  (click)="test()">Détail</button>
+    </button-->
+  </ion-list>
+
+</ion-content>

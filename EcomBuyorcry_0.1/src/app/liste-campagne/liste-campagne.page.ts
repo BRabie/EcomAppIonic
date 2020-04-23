@@ -22,17 +22,22 @@ export class ListeCampagnePage implements OnInit {
     public utilisateurProvider: UtilisateurService
     ) {
 
+      this.utilisateurProvider.getUser().then(user =>{
+        this.utilisateur = user;
+        this.getData();
+      });
+      /*
       this.utilisateurSubscription = this.utilisateurProvider.utilisateur$.subscribe(
 
         (utilisateurImported : any) => {
           this.utilisateur = utilisateurImported;
           console.log(this.utilisateur);
-          this.getData();
         }
 
       );
 
       this.utilisateurProvider.emitUtilisateur();
+      */
    }
 
   ngOnInit() {

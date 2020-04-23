@@ -3,6 +3,10 @@ import { NavParams ,NavController} from '@ionic/angular';
 import { UtilisateurService } from '../services/utilisateur.service';
 import { Subscription } from 'rxjs';
 import { HttpClient } from '@angular/common/http';
+import { InAppBrowser } from '@ionic-native/in-app-browser/ngx';
+import { AppAvailability } from '@ionic-native/app-availability/ngx';
+import { Platform } from '@ionic/angular';
+
 
 @Component({
   selector: 'app-ad-interest-search',
@@ -19,9 +23,41 @@ export class AdInterestSearchPage implements OnInit {
   constructor(
     public http :HttpClient,
     public navCtrl: NavController, 
-    public utilisateurProvider: UtilisateurService
+    public utilisateurProvider: UtilisateurService,
+    private iab: InAppBrowser,
+    private appAvailability: AppAvailability, 
+    private platform: Platform
     ) {
 
+
+      if (this.platform.is('ios')) {
+        this.appAvailability.check('twitter://')
+        .then(
+          (yes: boolean) => console.log('twitter://' + ' is available'),
+          (no: boolean) => console.log('twitter://' + ' is NOT available')
+        );
+       
+      } 
+      else if (this.platform.is('android')) {
+        this.appAvailability.check('com.twitter.android')
+        .then(
+          (yes: boolean) => console.log('com.twitter.android' + ' is available'),
+          (no: boolean) => console.log('com.twitter.android' + ' is NOT available')
+        );
+        
+      }
+      else{
+        //this.iab.create('https://www.facebook.com/search/pages/?q=rabie%20jrrge&epa=SERP_TAB');
+      }
+
+      
+
+      this.utilisateurProvider.getUser().then(user =>{
+        this.utilisateur = user;
+  
+      });
+
+      /*
       this.utilisateurSubscription = this.utilisateurProvider.utilisateur$.subscribe(
 
         (utilisateurImported : any) => {
@@ -32,6 +68,7 @@ export class AdInterestSearchPage implements OnInit {
       );
 
       this.utilisateurProvider.emitUtilisateur();
+      */
    }
 
   ngOnInit() {
@@ -69,6 +106,14 @@ export class AdInterestSearchPage implements OnInit {
     this.utilisateurProvider.updateUtilisateur(this.utilisateur);
     //this.navCtrl.navigateForward("liste-adset");
 
+  }
+
+  facebookSearch(motCle: string){
+    this.iab.create('https://www.facebook.com/search/pages/?q='+motCle.replace(" ","%20")+'&epa=SERP_TAB');
+  }
+
+  googleSearch(motCle: string){
+    this.iab.create('https://www.google.com/search?q='+motCle.replace(" ","%20")+'&sxsrf=ALeKk03t23pYD4RiO-WMqBQs8b0jX4h4LA:1587506625128&source=lnms&tbm=isch&sa=X&ved=2ahUKEwiMoeCDw_roAhU55uAKHfDSD38Q_AUoAXoECAsQAw&biw=1280&bih=671)');
   }
 
 

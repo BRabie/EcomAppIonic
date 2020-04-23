@@ -4,7 +4,7 @@ import { PreloadAllModules, RouterModule, Routes } from '@angular/router';
 const routes: Routes = [
   {
     path: '',
-    redirectTo: 'liste-business-account',
+    redirectTo: 'liste-ad-account',
     pathMatch: 'full'
   },
   {
@@ -26,6 +26,26 @@ const routes: Routes = [
   {
     path: 'ad-interest-search',
     loadChildren: () => import('./ad-interest-search/ad-interest-search.module').then( m => m.AdInterestSearchPageModule)
+  },
+  {
+    path: 'liste-ad-account',
+    loadChildren: () => import('./liste-ad-account/liste-ad-account.module').then( m => m.ListeAdAccountPageModule)
+  },
+  {
+    path: 'create-ad-set',
+    loadChildren: () => import('./create-ad-set/create-ad-set.module').then( m => m.CreateAdSetPageModule)
+  },
+  {
+    path: 'liste-product',
+    loadChildren: () => import('./liste-product/liste-product.module').then( m => m.ListeProductPageModule)
+  },
+  {
+    path: 'liste-product-interests-category',
+    loadChildren: () => import('./liste-product-interests-category/liste-product-interests-category.module').then( m => m.ListeProductInterestsCategoryPageModule)
+  },
+  {
+    path: 'create-product',
+    loadChildren: () => import('./create-product/create-product.module').then( m => m.CreateProductPageModule)
   }
 ];
 

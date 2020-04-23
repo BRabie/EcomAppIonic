@@ -23,6 +23,12 @@ export class ListeAdSetPage implements OnInit {
     public utilisateurProvider: UtilisateurService
     ) {
 
+      this.utilisateurProvider.getUser().then(user =>{
+        this.utilisateur = user;
+        this.getData();
+
+      });
+      /*
       this.utilisateurSubscription = this.utilisateurProvider.utilisateur$.subscribe(
 
         (utilisateurImported : any) => {
@@ -34,6 +40,7 @@ export class ListeAdSetPage implements OnInit {
       );
 
       this.utilisateurProvider.emitUtilisateur();
+      */
    }
 
   ngOnInit() {

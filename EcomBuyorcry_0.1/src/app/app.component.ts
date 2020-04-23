@@ -20,29 +20,29 @@ export class AppComponent implements OnInit {
   public selectedIndex = 0;
   public appPages = [
     {
-      title: 'Inbox',
-      url: '/folder/Inbox',
-      icon: 'mail'
+      title: 'Configuration',
+      url: '/liste-ad-account',
+      icon: 'settings'
     },
     {
-      title: 'Outbox',
+      title: 'Statistics',
       url: '/folder/Outbox',
-      icon: 'paper-plane'
+      icon: 'stats-chart'
     },
     {
-      title: 'Favorites',
-      url: '/folder/Favorites',
-      icon: 'heart'
+      title: 'Interests Search',
+      url: '/ad-interest-search',
+      icon: 'search'
     },
     {
-      title: 'Archived',
-      url: '/folder/Archived',
-      icon: 'archive'
+      title: 'Poducts',
+      url: '/liste-product',
+      icon: 'folder-open'
     },
     {
-      title: 'Trash',
+      title: 'Scoring',
       url: '/folder/Trash',
-      icon: 'trash'
+      icon: 'list'
     },
     {
       title: 'Spam',
@@ -85,6 +85,10 @@ export class AppComponent implements OnInit {
       }
 
     );
+
+    this.facebookLogin();
+
+
   }
 
   initializeApp() {
@@ -110,6 +114,10 @@ export class AppComponent implements OnInit {
     this.utilisateurProvider.connection();
 
   } 
+
+  facebookLogout(){
+    console.log("log out")
+  }
 
 
 

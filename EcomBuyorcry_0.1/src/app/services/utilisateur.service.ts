@@ -7,6 +7,7 @@ import { AngularFireAuth } from '@angular/fire/auth';
 import * as firebase from 'firebase/app';
 import { Facebook , FacebookLoginResponse } from '@ionic-native/facebook/ngx';
 import { NativeStorage } from '@ionic-native/native-storage/ngx';
+import { Storage } from '@ionic/storage';
 
 @Injectable({
   providedIn: 'root'
@@ -17,7 +18,7 @@ export class UtilisateurService {
 
   public utilisateur$ = new Subject<any>();
 
-  public activerStockage = false;
+  public activerStockage = true;
 
   constructor(
     public afDB: AngularFireDatabase,
@@ -25,9 +26,16 @@ export class UtilisateurService {
     private fb: Facebook,
     public platform: Platform,
     public http: HttpClient,
-    private nativeStorage: NativeStorage
+    private nativeStorage: NativeStorage,
+    private storage: Storage
     ) {
 
+   }
+
+
+  
+  getUser() : Promise<any>{
+    return this.storage.get('utilisateur');
    }
 
   //permet d'indiquer qu'une mise à jour au niveau du service est necessaire
@@ -35,7 +43,7 @@ export class UtilisateurService {
   emitUtilisateur() {
     // Or to get a key/value pair
     if(this.activerStockage){
-      this.nativeStorage.getItem('utilisateur').then((val) => {
+      this.storage.get('utilisateur').then((val) => {
         this.utilisateur$.next(val);
       });
     }
@@ -52,7 +60,8 @@ export class UtilisateurService {
   updateUtilisateur(user : any){
 
     if(this.activerStockage){
-      this.nativeStorage.setItem('utilisateur', user);
+      //this.nativeStorage.setItem('utilisateur', user);
+      this.storage.set("utilisateur", user);
     }
     else{
       this.utilisateur=user;
@@ -62,7 +71,24 @@ export class UtilisateurService {
   }
 
   connection(){
-    this.facebookLogin();
+
+    this.storage.get("utilisateur").then(user => {
+      if(user && user["credential"] && user["credential"]['accessToken'] && user["credential"]['accessToken'] != undefined){
+        this.http.get("https://graph.facebook.com/me?access_token="+user["credential"]['accessToken'])
+          .subscribe( data => {
+
+            this.emitUtilisateur();
+
+          },error => {
+            //si une erreur survient alors l access token n'est plus valide
+            this.facebookLogin();
+          })
+          
+      }
+      else{
+        this.facebookLogin();
+      }
+    });
     
   }
 
@@ -97,11 +123,27 @@ export class UtilisateurService {
     this.afAuth.auth
       .signInWithPopup(new firebase.auth.FacebookAuthProvider())
       .then((user) => { 
-        this.utilisateur = user;
-        if(this.activerStockage){
-          this.nativeStorage.setItem('utilisateur', user);
-        }
-        this.updateUtilisateur(user);
+
+        console.log(user);
+
+        this.utilisateur['user'] = {};
+        this.utilisateur['credential'] = {};
+        
+        this.utilisateur['credential']['accessToken'] = user['credential']['accessToken'];
+
+        this.utilisateur['user']['displayName'] = user['user']['displayName'];
+        this.utilisateur['user']['photoURL'] = user['user']['photoURL'];
+
+        this.http.get("https://graph.facebook.com/v6.0/oauth/access_token?grant_type=fb_exchange_token&client_id=686400892127554&client_secret=33da8bff8e628cd5c03146dce35c42a0&fb_exchange_token="+user['credential']['accessToken'])
+        .subscribe(dataComp => {
+          
+          this.utilisateur['credential']['accessToken'] = dataComp['access_token'];
+          console.log(this.utilisateur);
+          this.updateUtilisateur(this.utilisateur);
+          
+        });
+
+        
         
 
 
@@ -117,9 +159,23 @@ export class UtilisateurService {
     this.http.get(request+'&access_token='+ this.utilisateur['user']['credential']['accessToken'])
     .subscribe(data => {
       console.log(data);
+
     });
 
   }
+
+  /*
+  public cloneObject(newJavascriptObject : Object){
+
+    let returnedObject = {};
+    for(let e in newJavascriptObject){
+      returnedObject[e] = newJavascriptObject[e];
+    }
+    console.log(returnedObject);
+    return returnedObject;
+
+  }
+  */
 
   
 

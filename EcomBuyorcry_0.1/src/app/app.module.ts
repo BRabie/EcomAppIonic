@@ -17,6 +17,9 @@ import { AngularFireStorageModule } from '@angular/fire/storage';
 import { HttpClientModule } from '@angular/common/http';
 import { NativeStorage } from '@ionic-native/native-storage/ngx';
 import { ListeCampagnePage } from './liste-campagne/liste-campagne.page';
+import { IonicStorageModule } from '@ionic/storage';
+import { InAppBrowser } from '@ionic-native/in-app-browser/ngx';
+import { AppAvailability } from '@ionic-native/app-availability/ngx';
 
 export const firebaseConfig = 
 {
@@ -45,7 +48,11 @@ export const firebaseConfig =
     AngularFireDatabaseModule,
     AngularFireAuthModule,
     AngularFireStorageModule,
-    HttpClientModule
+    HttpClientModule,
+    IonicStorageModule.forRoot({
+      name: '__mydb',
+driverOrder: ['indexeddb', 'sqlite', 'websql']
+    })
     
   ],
   providers: [
@@ -53,7 +60,9 @@ export const firebaseConfig =
     SplashScreen,
     { provide: RouteReuseStrategy, useClass: IonicRouteStrategy },
     Facebook,
-    NativeStorage
+    NativeStorage,
+    InAppBrowser,
+    AppAvailability
     
 
 

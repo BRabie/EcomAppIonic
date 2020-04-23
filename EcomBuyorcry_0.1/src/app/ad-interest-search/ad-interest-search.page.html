@@ -7,8 +7,6 @@
   </ion-toolbar>
 </ion-header>
 
-<ion-content>
-
   <ion-header translucent>
 
     <ion-toolbar>
@@ -27,6 +25,8 @@
           <p>ID : {{item.id}}</p>
           <p>Audience size : {{item.audience_size}}</p>
         </ion-label>
+        <ion-icon (click)="facebookSearch(item.name)"  name="logo-facebook"></ion-icon>
+        <ion-icon (click)="googleSearch(item.name)" name="logo-google"></ion-icon>
   
       </ion-item>
 

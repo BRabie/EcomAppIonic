@@ -7,13 +7,12 @@ import { UtilisateurService } from '../services/utilisateur.service';
 import { HttpClient } from '@angular/common/http';
 import { ListeCampagnePage } from '../liste-campagne/liste-campagne.page';
 
-
 @Component({
-  selector: 'app-liste-business-account',
-  templateUrl: './liste-business-account.page.html',
-  styleUrls: ['./liste-business-account.page.scss'],
+  selector: 'app-liste-ad-account',
+  templateUrl: './liste-ad-account.page.html',
+  styleUrls: ['./liste-ad-account.page.scss'],
 })
-export class ListeBusinessAccountPage implements OnInit {
+export class ListeAdAccountPage implements OnInit {
 
   loading: any;
   providerFb: firebase.auth.FacebookAuthProvider;
@@ -33,28 +32,33 @@ export class ListeBusinessAccountPage implements OnInit {
         public router:Router
       ) 
   {
+
+
     this.utilisateurProvider.getUser().then(user =>{
       this.utilisateur = user;
       this.getData();
 
     });
+
     /*
     this.utilisateurSubscription = this.utilisateurProvider.utilisateur$.subscribe(
 
       (utilisateurImported : any) => {
         this.utilisateur = utilisateurImported;
         console.log(this.utilisateur);
+        
       }
 
     );
     */
+
   }
 
   ngOnInit() {
 
   }
 
-  public refresh(){
+  refresh() : void{
     this.utilisateurProvider.emitUtilisateur();
   }
 
@@ -77,6 +81,7 @@ export class ListeBusinessAccountPage implements OnInit {
   itemTapped(event, item) {
 
     this.utilisateur["adaccount"] = item;
+    console.log(item);
     this.utilisateurProvider.updateUtilisateur(this.utilisateur);
     this.navCtrl.navigateForward("liste-campagne");
 
