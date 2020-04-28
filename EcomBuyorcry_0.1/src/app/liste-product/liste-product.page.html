@@ -13,22 +13,33 @@
   </ion-toolbar>
 </ion-header>
 
-<ion-content>
+<ion-content  scrollX="true">
+
+  <table  class="data-table">
+    <tr>
+      <td *ngFor="let header of headerRow" text-center><b>{{ header }}</b></td>
+    </tr>
+    <tr *ngFor="let row of csvData; let i = index">
+      <td *ngFor="let data of row; let j = index; trackBy: trackByFn" class="data-col ">
+        <ion-input type="text" [(ngModel)]="csvData[i][j]"></ion-input>
+      </td>
+    </tr>
+  </table>
 
 
   <ion-list>
 
     <ion-list-header lines="inset">
-      <ion-label style="font-weight: bolder;font-size: large;">Ad Account:</ion-label>
+      <ion-label style="font-weight: bolder;font-size: large;">Products:</ion-label>
       <ion-button (click)="refresh()">REFRESH</ion-button>
     </ion-list-header>
 
 
 
-    <ion-item-sliding *ngFor="let item of data" (click)="itemTapped($event, item)" >
+    <ion-item-sliding *ngFor="let item of data" >
 
   
-      <ion-item >
+      <ion-item (click)="itemTapped($event, item)"  >
         <ion-avatar slot="start">
           <img src="https://gravatar.com/avatar/dba6bae8c566f9d4041fb9cd9ada7741?d=identicon&f=y">
         </ion-avatar>
@@ -38,9 +49,24 @@
         </ion-label>
   
       </ion-item>
+
+
   
       <ion-item-options side="end">
-        <ion-item-option (click)="unread(item)" color="danger">Delete</ion-item-option>
+
+        <ion-item-option (click)="exportViewProductCategories()" color="success">
+          <ion-icon slot="icon-only" (click)="editProduct($event,item)" name="newspaper"> </ion-icon>
+        </ion-item-option>
+
+
+        <ion-item-option (click)="editProduct($event,item)" color="primary">
+          <ion-icon slot="icon-only" (click)="editProduct($event,item)" name="create"> </ion-icon>
+        </ion-item-option>
+
+        <ion-item-option (click)="deleteProduct($event,item)" color="danger">
+          <ion-icon slot="icon-only" (click)="deleteProduct($event,item)" name="trash"> </ion-icon>
+        </ion-item-option>
+
       </ion-item-options>
     </ion-item-sliding>
   

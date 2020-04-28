@@ -8,7 +8,7 @@ import { StatusBar } from '@ionic-native/status-bar/ngx';
 
 import { AppComponent } from './app.component';
 import { AppRoutingModule } from './app-routing.module';
-import { Facebook } from '@ionic-native/facebook/ngx';
+//import { Facebook } from '@ionic-native/facebook/ngx';
 
 import { AngularFireModule } from '@angular/fire';
 import { AngularFireDatabaseModule } from '@angular/fire/database';
@@ -20,6 +20,14 @@ import { ListeCampagnePage } from './liste-campagne/liste-campagne.page';
 import { IonicStorageModule } from '@ionic/storage';
 import { InAppBrowser } from '@ionic-native/in-app-browser/ngx';
 import { AppAvailability } from '@ionic-native/app-availability/ngx';
+
+import { PapaParseModule } from 'ngx-papaparse';
+import { File } from '@ionic-native/file/ngx';
+import { SocialSharing } from '@ionic-native/social-sharing/ngx';
+
+import 'chartjs-plugin-zoom';
+
+
 
 export const firebaseConfig = 
 {
@@ -52,17 +60,20 @@ export const firebaseConfig =
     IonicStorageModule.forRoot({
       name: '__mydb',
 driverOrder: ['indexeddb', 'sqlite', 'websql']
-    })
+    }),
+    PapaParseModule
     
   ],
   providers: [
     StatusBar,
     SplashScreen,
     { provide: RouteReuseStrategy, useClass: IonicRouteStrategy },
-    Facebook,
+    //Facebook,
     NativeStorage,
     InAppBrowser,
-    AppAvailability
+    AppAvailability,
+    File,
+    SocialSharing
     
 
 

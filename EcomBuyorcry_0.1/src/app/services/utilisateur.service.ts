@@ -5,7 +5,7 @@ import { Platform } from '@ionic/angular';
 import { AngularFireDatabase } from '@angular/fire/database';
 import { AngularFireAuth } from '@angular/fire/auth';
 import * as firebase from 'firebase/app';
-import { Facebook , FacebookLoginResponse } from '@ionic-native/facebook/ngx';
+//import { Facebook , FacebookLoginResponse } from '@ionic-native/facebook/ngx';
 import { NativeStorage } from '@ionic-native/native-storage/ngx';
 import { Storage } from '@ionic/storage';
 
@@ -23,7 +23,7 @@ export class UtilisateurService {
   constructor(
     public afDB: AngularFireDatabase,
     public afAuth: AngularFireAuth,
-    private fb: Facebook,
+    //private fb: Facebook,
     public platform: Platform,
     public http: HttpClient,
     private nativeStorage: NativeStorage,
@@ -106,6 +106,7 @@ export class UtilisateurService {
     this.facebookWeb();
   } 
 
+  /*
   facebookCordova() {
     this.fb.login(['email']).then( (response : FacebookLoginResponse) => {
         const facebookCredential = firebase.auth.FacebookAuthProvider
@@ -118,6 +119,7 @@ export class UtilisateurService {
         });
     }).catch((error) => { console.log(error); });
   }
+  */
 
   facebookWeb() {
     this.afAuth.auth

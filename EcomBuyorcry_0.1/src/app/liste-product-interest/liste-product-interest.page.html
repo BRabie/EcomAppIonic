@@ -5,7 +5,7 @@
     </ion-buttons>
     <ion-title>Facebook Manager</ion-title>
     <ion-buttons slot="end">
-      <ion-button (click)="createProductInterestCategory()" color="success">New Category</ion-button>
+      <ion-button (click)="createProductInterest()" color="success">New Interest</ion-button>
     </ion-buttons>
 
     
@@ -19,7 +19,7 @@
   <ion-list>
 
     <ion-list-header lines="inset">
-      <ion-label style="font-weight: bolder;font-size: large;">Interest Categories:</ion-label>
+      <ion-label style="font-weight: bolder;font-size: large;">Interests:</ion-label>
       <ion-button (click)="refresh()">REFRESH</ion-button>
     </ion-list-header>
 
@@ -44,11 +44,11 @@
         <ion-item-options side="end">
 
 
-          <ion-item-option (click)="editProductInterestCategory($event,item)" color="primary">
+          <ion-item-option (click)="editProductInterest($event,item)" color="primary">
             <ion-icon slot="icon-only" (click)="editProduct($event,item)" name="create"> </ion-icon>
           </ion-item-option>
 
-          <ion-item-option (click)="deleteProductInterestCategory($event,item)" color="danger">
+          <ion-item-option (click)="deleteProductInterest($event,item)" color="danger">
             <ion-icon slot="icon-only" (click)="deleteProduct($event,item)" name="trash"> </ion-icon>
           </ion-item-option>
 

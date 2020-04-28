@@ -46,6 +46,26 @@ const routes: Routes = [
   {
     path: 'create-product',
     loadChildren: () => import('./create-product/create-product.module').then( m => m.CreateProductPageModule)
+  },
+  {
+    path: 'ad-interest-search-liste-product',
+    loadChildren: () => import('./ad-interest-search-liste-product/ad-interest-search-liste-product.module').then( m => m.AdInterestSearchListeProductPageModule)
+  },
+  {
+    path: 'ad-interest-search-liste-product-interests-category',
+    loadChildren: () => import('./ad-interest-search-liste-product-interests-category/ad-interest-search-liste-product-interests-category.module').then( m => m.AdInterestSearchListeProductInterestsCategoryPageModule)
+  },
+  {
+    path: 'liste-product-interest',
+    loadChildren: () => import('./liste-product-interest/liste-product-interest.module').then( m => m.ListeProductInterestPageModule)
+  },
+  {
+    path: 'export-product-categories',
+    loadChildren: () => import('./export-product-categories/export-product-categories.module').then( m => m.ExportProductCategoriesPageModule)
+  },
+  {
+    path: 'adset-statistics',
+    loadChildren: () => import('./adset-statistics/adset-statistics.module').then( m => m.AdsetStatisticsPageModule)
   }
 ];
 

@@ -1,11 +1,13 @@
 import { Component, OnInit, Inject } from '@angular/core';
-import { NavParams ,NavController} from '@ionic/angular';
+import { NavParams ,NavController, ModalController, AlertController} from '@ionic/angular';
 import { UtilisateurService } from '../services/utilisateur.service';
 import { Subscription } from 'rxjs';
 import { HttpClient } from '@angular/common/http';
 import { InAppBrowser } from '@ionic-native/in-app-browser/ngx';
 import { AppAvailability } from '@ionic-native/app-availability/ngx';
 import { Platform } from '@ionic/angular';
+import { ListeProductPage } from '../liste-product/liste-product.page';
+import { AdInterestSearchListeProductPage } from '../ad-interest-search-liste-product/ad-interest-search-liste-product.page';
 
 
 @Component({
@@ -19,15 +21,19 @@ export class AdInterestSearchPage implements OnInit {
   public utilisateur : any;
   public data = [];
   public getRequest = "/adsets?fields=id,bid_adjustments,bid_amount,bid_strategy,configured_status,daily_budget,name,optimization_goal,status,start_time";
-
+  public dataInteresetCategory = [];
   constructor(
     public http :HttpClient,
     public navCtrl: NavController, 
     public utilisateurProvider: UtilisateurService,
     private iab: InAppBrowser,
     private appAvailability: AppAvailability, 
-    private platform: Platform
+    private platform: Platform,
+    public modalController: ModalController,
+    public alertController: AlertController
     ) {
+
+
 
 
       if (this.platform.is('ios')) {
@@ -54,6 +60,10 @@ export class AdInterestSearchPage implements OnInit {
 
       this.utilisateurProvider.getUser().then(user =>{
         this.utilisateur = user;
+        this.refreshProductInterestCategory();
+        if(this.utilisateur["searchvalue"]){
+          this.getData(this.utilisateur["searchvalue"]);
+        }
   
       });
 
@@ -74,15 +84,40 @@ export class AdInterestSearchPage implements OnInit {
   ngOnInit() {
   }
 
+  ngOnDestroy(){
+
+    this.utilisateurProvider.updateUtilisateur(this.utilisateur);
+  }
+
+  refreshProductInterestCategory(){
+
+    this.http.get("http://localhost:9091/requestAny/"+
+    "select pic.id as id,concat(pic.name,' : ',p.name) as category " +
+    "from product_interest as pi,product_interest_cat as pic,product as p " +
+    "where pic.id = pi.productinterestcatid " +
+    "and p.id = pic.productid " +
+    "and p.adaccountid = '" + this.utilisateur["adaccount"]["id"] + "' " +
+    "group by pic.id,pic.name,p.name " +
+    "order by pic.id, max(pi.id) desc " +
+    "limit 100 "
+    )
+    .subscribe(response => {
+      console.log(response);
+      this.dataInteresetCategory = response["features"];
+    });
+
+  }
+
   //fonction necessaire pour le filtre des fournisseurs
   getItems(ev) {
     // set val to the value of the ev target
     var val = ev.target.value;
     console.log(val);
+    this.utilisateur["searchvalue"]=val;
 
     // if the value is an empty string don't filter the items
     if (val && val.trim() != '') {
-      this.getData( JSON.stringify([val]) );
+      this.getData( val );
     }
   }
 
@@ -90,10 +125,10 @@ export class AdInterestSearchPage implements OnInit {
     this.utilisateurProvider.emitUtilisateur();
   }
 
-  getData(listInterests : string){
+  getData(interests : string){
   
     //this.utilisateurProvider.emitUtilisateur();
-    this.http.get('https://graph.facebook.com/search?type=adinterestsuggestion&limit=1000&locale=en_US&interest_list='+listInterests+'&access_token='+ this.utilisateur['credential']['accessToken'])
+    this.http.get('https://graph.facebook.com/search?type=adinterest&limit=100&locale=en_US&q='+interests+'&access_token='+ this.utilisateur['credential']['accessToken'])
     .subscribe(response => {
       console.log(response);
       this.data = response["data"];
@@ -114,6 +149,72 @@ export class AdInterestSearchPage implements OnInit {
 
   googleSearch(motCle: string){
     this.iab.create('https://www.google.com/search?q='+motCle.replace(" ","%20")+'&sxsrf=ALeKk03t23pYD4RiO-WMqBQs8b0jX4h4LA:1587506625128&source=lnms&tbm=isch&sa=X&ved=2ahUKEwiMoeCDw_roAhU55uAKHfDSD38Q_AUoAXoECAsQAw&biw=1280&bih=671)');
+  }
+
+  async presentProductInterestCategory(item) {
+
+    let inputsRadioCategory = [];
+
+    for(let i = 0 ; i < this.dataInteresetCategory.length ;i++){
+
+      inputsRadioCategory.push({
+          name: this.dataInteresetCategory[i]["category"],
+          type: 'radio',
+          label: this.dataInteresetCategory[i]["category"],
+          value: this.dataInteresetCategory[i]["id"]
+      });
+
+    }
+
+
+    const alert = await this.alertController.create({
+      header: 'Radio',
+      inputs: inputsRadioCategory,
+      buttons: [
+        {
+          text: 'Cancel',
+          role: 'cancel',
+          cssClass: 'secondary',
+          handler: () => {
+            console.log('Confirm Cancel');
+          }
+        }, {
+          text: 'Ok',
+          handler: (category) => {
+            console.log(category);
+            this.http.get("http://localhost:9091/requestAny/insert into  public.product_interest(productinterestcatid,name) values ('"+category+"','"+item["name"]+"')")
+            .subscribe(response => {
+              console.log(response);
+              this.data = response["features"];
+            },err =>{
+              console.log(err);
+            });
+            this.refreshProductInterestCategory();
+          }
+        }
+      ]
+    });
+
+    await alert.present();
+  }
+
+
+  async addToProductInterestCategory(item){
+    
+
+    const modal = await this.modalController.create({
+      component: AdInterestSearchListeProductPage,
+      swipeToClose: true,
+      animated:true,
+      componentProps: {
+        "itemInterestSearch": item
+      }
+    });
+    modal.present();
+
+    const { data } = await modal.onWillDismiss();
+    console.log(data);     
+    
   }
 
 

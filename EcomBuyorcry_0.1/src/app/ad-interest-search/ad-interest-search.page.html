@@ -10,25 +10,35 @@
   <ion-header translucent>
 
     <ion-toolbar>
-      <ion-searchbar  (ionInput)="getItems($event)"></ion-searchbar>
+      <ion-searchbar animated autocomplete placeholder="Basket..." showCancelButton="focus"  (ionInput)="getItems($event)"></ion-searchbar>
     </ion-toolbar>
   </ion-header>
 
   <ion-content fullscreen>
     <ion-list>
-      <ion-item *ngFor="let item of data" (click)="itemTapped($event, item)" >
-        <ion-avatar slot="start">
-          <img src="https://gravatar.com/avatar/dba6bae8c566f9d4041fb9cd9ada7741?d=identicon&f=y">
-        </ion-avatar>
-        <ion-label>
-          <h3>Name : {{item.name}} </h3>
-          <p>ID : {{item.id}}</p>
-          <p>Audience size : {{item.audience_size}}</p>
-        </ion-label>
-        <ion-icon (click)="facebookSearch(item.name)"  name="logo-facebook"></ion-icon>
-        <ion-icon (click)="googleSearch(item.name)" name="logo-google"></ion-icon>
-  
-      </ion-item>
+      <ion-item-sliding *ngFor="let item of data" >
+        <ion-item  (click)="itemTapped($event, item)" >
+          <ion-avatar slot="start">
+            <img src="https://gravatar.com/avatar/dba6bae8c566f9d4041fb9cd9ada7741?d=identicon&f=y">
+          </ion-avatar>
+          <ion-label>
+            <h3>Name : {{item.name}} </h3>
+            <!--p>ID : {{item.id}}</p-->
+            <p>Audience size : {{item.audience_size | number:0}}</p>
+            <p>Topic : {{item.topic}}</p>
+          </ion-label>
+          <ion-icon (click)="facebookSearch(item.name)"  name="logo-facebook"></ion-icon>
+          <ion-icon (click)="googleSearch(item.name)" name="logo-google"></ion-icon>
+    
+        </ion-item>
+        <ion-item-options side="end">
+          <ion-item-option (click)="presentProductInterestCategory(item)" color="success">
+            
+              <ion-icon slot="icon-only" name="bookmark"></ion-icon>
+              
+          </ion-item-option>
+        </ion-item-options>
+      </ion-item-sliding>
 
     </ion-list>
 

@@ -1,22 +1,18 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import {  NavController,ModalController, NavParams, AlertController, Platform } from '@ionic/angular';
+import {  NavController,ModalController, NavParams, AlertController } from '@ionic/angular';
 
 import {Subscription} from "rxjs";
 import { UtilisateurService } from '../services/utilisateur.service';
 import { HttpClient } from '@angular/common/http';
 import { ListeCampagnePage } from '../liste-campagne/liste-campagne.page';
-import { ListeProductInterestsCategoryPage } from '../liste-product-interests-category/liste-product-interests-category.page';
-import { Papa } from 'ngx-papaparse';
-import { SocialSharing } from '@ionic-native/social-sharing/ngx';
-import { File } from '@ionic-native/file/ngx';
 
 @Component({
-  selector: 'app-liste-product',
-  templateUrl: './liste-product.page.html',
-  styleUrls: ['./liste-product.page.scss'],
+  selector: 'app-liste-product-interest',
+  templateUrl: './liste-product-interest.page.html',
+  styleUrls: ['./liste-product-interest.page.scss'],
 })
-export class ListeProductPage implements OnInit {
+export class ListeProductInterestPage implements OnInit {
 
   loading: any;
   providerFb: firebase.auth.FacebookAuthProvider;
@@ -29,23 +25,15 @@ export class ListeProductPage implements OnInit {
 
   public pushPage = ListeCampagnePage;
 
-  csvData: any[] = [];
-  headerRow: any[] = [];
-
   constructor(
         public navCtrl: NavController, 
         public utilisateurProvider: UtilisateurService,
         public http :HttpClient,
         public router:Router,
         public modalController: ModalController,
-        public alertController: AlertController,
-        private papa: Papa,
-        private plt: Platform,
-        private file: File,
-        private socialSharing: SocialSharing
+        public alertController: AlertController
       ) 
   {
-
 
 
     this.utilisateurProvider.getUser().then(user =>{
@@ -79,13 +67,12 @@ export class ListeProductPage implements OnInit {
   getData(){
     //this.utilisateurProvider.emitUtilisateur();
 
-    this.http.get("http://localhost:9091/requestAny/select * from public.product where adaccountid = '"+this.utilisateur["adaccount"]["id"]+"' order by id desc")
+    this.http.get("http://localhost:9091/requestAny/select * from public.product_interest where productinterestcatid = "+this.utilisateur["interestcategory"]["id"]+" order by id desc")
     .subscribe(response => {
       console.log(response);
       this.data = response["features"];
     });
   }
-
 
   facebookLogin() {
 
@@ -94,28 +81,21 @@ export class ListeProductPage implements OnInit {
 
   } 
 
+  
   itemTapped(event, item) {
 
-    this.utilisateur["product"] = item;
+    this.utilisateur["interest"] = item;
     this.utilisateurProvider.updateUtilisateur(this.utilisateur);
-    this.navCtrl.navigateForward("liste-product-interests-category");
-
-  }
-
-  exportViewProductCategories(event, item) {
-
-    this.utilisateur["product"] = item;
-    this.utilisateurProvider.updateUtilisateur(this.utilisateur);
-    this.navCtrl.navigateForward("export-product-categories");
+    this.navCtrl.navigateForward("ad-interest-search");
 
   }
 
 
-  async deleteProduct(event,item) {
+  async deleteProductInterest(event,item) {
     console.log(item);
     const alert = await this.alertController.create({
       header: 'Warning!',
-      message: 'Are you sure to delete this product',
+      message: 'Are you sure to delete this interest',
       buttons: [
         {
           text: 'Cancel',
@@ -128,7 +108,7 @@ export class ListeProductPage implements OnInit {
           text: 'Ok',
           handler: (data) => {
 
-            this.http.get("http://localhost:9091/requestAny/delete from public.product  where id = " +  item.id)
+            this.http.get("http://localhost:9091/requestAny/delete from public.product_interest  where id = " +  item.id)
             .subscribe(response => {
               console.log(response);
               this.data = response["features"];
@@ -144,16 +124,16 @@ export class ListeProductPage implements OnInit {
     await alert.present();
   }
 
-  async createProduct() {
+  async createProductInterest() {
     const alert = await this.alertController.create({
-      header: 'New Product',
+      header: 'New Interest',
       //message: 'Product Name',
       inputs: [
         {
-          name: 'productName',
-          id: 'productName',
+          name: 'interestName',
+          id: 'interestName',
           type: 'text',
-          placeholder: 'Product Name'
+          placeholder: 'Katty Perry...'
         }
       ],
       buttons: [
@@ -169,7 +149,7 @@ export class ListeProductPage implements OnInit {
           handler: (data) => {
 
             console.log(data["productName"]);
-            this.http.get("http://localhost:9091/requestAny/insert into  public.product(adaccountid,name) values ('"+this.utilisateur["adaccount"]["id"]+"','"+data["productName"]+"')")
+            this.http.get("http://localhost:9091/requestAny/insert into  public.product_interest(productinterestcatid,name) values ('"+this.utilisateur["interestcategory"]["id"]+"','"+data["interestName"]+"')")
             .subscribe(response => {
               console.log(response);
               this.data = response["features"];
@@ -185,15 +165,15 @@ export class ListeProductPage implements OnInit {
     await alert.present();
   }
 
-  async editProduct(event,item) {
+  async editProductInterest(event,item) {
     console.log(item);
     const alert = await this.alertController.create({
-      header: 'New Product',
+      header: 'Edit Interest',
       //message: 'Product Name',
       inputs: [
         {
-          name: 'productName',
-          id: 'productName',
+          name: 'interestName',
+          id: 'interestName',
           value: item.name,
           type: 'text',
           placeholder: 'Product Name'
@@ -211,8 +191,7 @@ export class ListeProductPage implements OnInit {
           text: 'Ok',
           handler: (data) => {
 
-            console.log(data["productName"]);
-            this.http.get("http://localhost:9091/requestAny/update public.product set name = '" + data["productName"] + "' where id = " +  item.id)
+            this.http.get("http://localhost:9091/requestAny/update public.product_interest set name = '" + data["interestName"] + "' where id = " +  item.id)
             .subscribe(response => {
               console.log(response);
               this.data = response["features"];

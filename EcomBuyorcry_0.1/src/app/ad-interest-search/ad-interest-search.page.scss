@@ -1,9 +1,10 @@
-ion-icon:hover {
+
+ion-item > ion-icon:hover {
     background-color:#666666;
     padding:5px;
   }
 
-ion-icon {
+ion-item > ion-icon {
     padding:5px;
     font-size:1.8em;
 }   

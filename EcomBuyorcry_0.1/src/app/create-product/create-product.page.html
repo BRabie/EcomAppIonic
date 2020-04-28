@@ -1,11 +1,21 @@
 <ion-header translucent>
   <ion-toolbar>
-    <ion-title>New Product</ion-title>
+    <ion-title style="text-align: center;">New Product</ion-title>
     <ion-buttons slot="end">
-      <ion-button (click)="dismissModal()">Close</ion-button>
+      <ion-button primary (click)="dismissModal()">Close</ion-button>
     </ion-buttons>
   </ion-toolbar>
 </ion-header>
 <ion-content fullscreen>
+
+  <br>
+  <br>
+  <br>
+  <ion-item>
+    <ion-label style="color: #fff;font-weight: bold">
+      Product Name :
+    </ion-label>
+    <ion-input text-center type="text" [disabled]="!modeEditionAffichage" name="nomprojet" placeholder="" [(ngModel)]="projetActuel.nomprojet"  ></ion-input>
+  </ion-item>
 
 </ion-content>

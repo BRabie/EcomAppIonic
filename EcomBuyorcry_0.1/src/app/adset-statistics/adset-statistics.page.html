@@ -1,0 +1,51 @@
+<ion-header [translucent]="true">
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-menu-button></ion-menu-button>
+    </ion-buttons>
+    <ion-title>Adset Statistics</ion-title>
+  </ion-toolbar>
+</ion-header>
+ 
+<ion-content>
+  
+  
+  <ion-select  okText="Okay"  value="brown" okText="Okay" cancelText="Dismiss" mode="ios" interface="popover">
+    <ion-label >Frefe</ion-label>
+    <ion-select-option  value="brown">Brown</ion-select-option>
+    <ion-select-option  value="blonde">Blonde</ion-select-option>
+    <ion-select-option  value="black">Black</ion-select-option>
+    <ion-select-option  value="red">Red</ion-select-option>
+  </ion-select>
+
+ 
+  <canvas baseChart 
+  [datasets]="chartData" 
+  [labels]="chartLabels" 
+  [options]="chartOptions" 
+  [colors]="chartColors"
+  
+  [legend]="showLegend" 
+  [chartType]="chartType">
+  </canvas>
+ 
+  <ion-card>
+    <ion-card-header>
+      <ion-card-title>Settings</ion-card-title>
+    </ion-card-header>
+    <ion-card-content>
+      <ion-item>
+        <ion-label>Line chart?</ion-label>
+        <ion-toggle (ionChange)="typeChanged($event)" checked></ion-toggle>
+      </ion-item>
+      <ion-item>
+        <ion-label>Show legend?</ion-label>
+        <ion-toggle [(ngModel)]="showLegend"></ion-toggle>
+      </ion-item>
+      <ion-item>
+        <ion-label>Background color</ion-label>
+        <ion-input type="text" [(ngModel)]="chartColors[0].backgroundColor"></ion-input>
+      </ion-item>
+    </ion-card-content>
+  </ion-card>
+</ion-content>
