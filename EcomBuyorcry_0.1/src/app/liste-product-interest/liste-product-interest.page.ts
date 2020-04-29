@@ -67,7 +67,7 @@ export class ListeProductInterestPage implements OnInit {
   getData(){
     //this.utilisateurProvider.emitUtilisateur();
 
-    this.http.get("http://localhost:9091/requestAny/select * from public.product_interest where productinterestcatid = "+this.utilisateur["interestcategory"]["id"]+" order by id desc")
+    this.http.get("http://192.168.8.102:9091/requestAny/select * from public.product_interest where productinterestcatid = "+this.utilisateur["interestcategory"]["id"]+" order by id desc")
     .subscribe(response => {
       console.log(response);
       this.data = response["features"];
@@ -108,7 +108,7 @@ export class ListeProductInterestPage implements OnInit {
           text: 'Ok',
           handler: (data) => {
 
-            this.http.get("http://localhost:9091/requestAny/delete from public.product_interest  where id = " +  item.id)
+            this.http.get("http://192.168.8.102:9091/requestAny/delete from public.product_interest  where id = " +  item.id)
             .subscribe(response => {
               console.log(response);
               this.data = response["features"];
@@ -149,7 +149,7 @@ export class ListeProductInterestPage implements OnInit {
           handler: (data) => {
 
             console.log(data["productName"]);
-            this.http.get("http://localhost:9091/requestAny/insert into  public.product_interest(productinterestcatid,name) values ('"+this.utilisateur["interestcategory"]["id"]+"','"+data["interestName"]+"')")
+            this.http.get("http://192.168.8.102:9091/requestAny/insert into  public.product_interest(productinterestcatid,name) values ('"+this.utilisateur["interestcategory"]["id"]+"','"+data["interestName"]+"')")
             .subscribe(response => {
               console.log(response);
               this.data = response["features"];
@@ -191,7 +191,7 @@ export class ListeProductInterestPage implements OnInit {
           text: 'Ok',
           handler: (data) => {
 
-            this.http.get("http://localhost:9091/requestAny/update public.product_interest set name = '" + data["interestName"] + "' where id = " +  item.id)
+            this.http.get("http://192.168.8.102:9091/requestAny/update public.product_interest set name = '" + data["interestName"] + "' where id = " +  item.id)
             .subscribe(response => {
               console.log(response);
               this.data = response["features"];

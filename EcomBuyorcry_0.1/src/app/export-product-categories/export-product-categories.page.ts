@@ -77,7 +77,7 @@ export class ExportProductCategoriesPage implements OnInit {
   private loadCSV() {
 
 
-    this.http.get("http://localhost:9091/requestAny/"+
+    this.http.get("http://192.168.8.102:9091/requestAny/"+
     "select pic.name as category, string_agg(pi.name, ',,') as interests " +
     "from product_interest_cat as pic "+
     "left join product_interest as pi on pic.id = pi.productinterestcatid " +

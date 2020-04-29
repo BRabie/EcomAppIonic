@@ -91,7 +91,7 @@ export class AdInterestSearchPage implements OnInit {
 
   refreshProductInterestCategory(){
 
-    this.http.get("http://localhost:9091/requestAny/"+
+    this.http.get("http://192.168.8.102:9091/requestAny/"+
     "select pic.id as id,concat(pic.name,' : ',p.name) as category " +
     "from product_interest as pi,product_interest_cat as pic,product as p " +
     "where pic.id = pi.productinterestcatid " +
@@ -182,7 +182,7 @@ export class AdInterestSearchPage implements OnInit {
           text: 'Ok',
           handler: (category) => {
             console.log(category);
-            this.http.get("http://localhost:9091/requestAny/insert into  public.product_interest(productinterestcatid,name) values ('"+category+"','"+item["name"]+"')")
+            this.http.get("http://192.168.8.102:9091/requestAny/insert into  public.product_interest(productinterestcatid,name) values ('"+category+"','"+item["name"]+"')")
             .subscribe(response => {
               console.log(response);
               this.data = response["features"];

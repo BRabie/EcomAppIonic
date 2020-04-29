@@ -68,7 +68,7 @@ export class AdsetStatisticsPage  {
   }
  
   getData() {
-      this.http.get("http://localhost:9091/requestAny/select * from public.oldinsight order by id asc" ).subscribe(res => {
+      this.http.get("http://192.168.8.102:9091/requestAny/select * from public.oldinsight order by id asc" ).subscribe(res => {
       const history = res['features'];
 
       console.log(history);

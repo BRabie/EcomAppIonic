@@ -56,6 +56,7 @@
     "cordova-sqlite-storage": "^5.0.0",
     "core-js": "^2.5.4",
     "es6-promise-plugin": "^4.2.2",
+    "firebase": "^7.14.2",
     "ng2-charts": "^2.3.0",
     "ngx-papaparse": "^3.0.4",
     "rxjs": "^6.5.5",
@@ -105,7 +106,9 @@
       "cordova-plugin-ionic-keyboard": {},
       "cordova-plugin-facebook4": {
         "APP_ID": "686400892127554",
-        "APP_NAME": "buyorcry_app_1"
+        "APP_NAME": "buyorcry_app_1",
+        "FACEBOOK_HYBRID_APP_EVENTS": "false",
+        "FACEBOOK_ANDROID_SDK_VERSION": "5.13.0"
       },
       "cordova-plugin-advanced-http": {},
       "cordova-sqlite-storage": {},
@@ -118,13 +121,18 @@
         "PHOTO_LIBRARY_ADD_USAGE_DESCRIPTION": "This app requires photo library access to function properly.",
         "PHOTO_LIBRARY_USAGE_DESCRIPTION": "This app requires photo library access to function properly."
       },
-      "cordova-plugin-firebasex": {},
+      "cordova-plugin-firebasex": {
+        "FIREBASE_ANALYTICS_COLLECTION_ENABLED": "true",
+        "FIREBASE_PERFORMANCE_COLLECTION_ENABLED": "true",
+        "FIREBASE_CRASHLYTICS_COLLECTION_ENABLED": "true"
+      },
       "cordova-plugin-androidx": {},
       "cordova-plugin-androidx-adapter": {}
     },
     "platforms": [
       "browser",
-      "ios"
+      "ios",
+      "android"
     ]
   }
 }

@@ -1,0 +1,69 @@
+{
+  "project_info": {
+    "project_number": "925543537211",
+    "firebase_url": "https://topomap-gps-miss-1531063633367.firebaseio.com",
+    "project_id": "topomap-gps-miss-1531063633367",
+    "storage_bucket": "topomap-gps-miss-1531063633367.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:925543537211:android:42c92e1567ba4496af1a1e",
+        "android_client_info": {
+          "package_name": "io.ionic.starter"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "925543537211-opldkf3rrkmdhg98aifvh1gbj3vog9o7.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDL2U0s4mRNNaj-99b7q34I9a_u33ggmlM"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "925543537211-opldkf3rrkmdhg98aifvh1gbj3vog9o7.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:925543537211:android:19113b1b999d57f8af1a1e",
+        "android_client_info": {
+          "package_name": "net.buyorcry.app.android"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "925543537211-opldkf3rrkmdhg98aifvh1gbj3vog9o7.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDL2U0s4mRNNaj-99b7q34I9a_u33ggmlM"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "925543537211-opldkf3rrkmdhg98aifvh1gbj3vog9o7.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

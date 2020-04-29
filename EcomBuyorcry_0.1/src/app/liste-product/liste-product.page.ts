@@ -81,7 +81,7 @@ export class ListeProductPage implements OnInit {
   getData(){
     //this.utilisateurProvider.emitUtilisateur();
 
-    this.http.get("http://localhost:9091/requestAny/select * from public.product where adaccountid = '"+this.utilisateur["adaccount"]["id"]+"' order by id desc")
+    this.http.get("http://192.168.8.102:9091/requestAny/select * from public.product where adaccountid = '"+this.utilisateur["adaccount"]["id"]+"' order by id desc")
     .subscribe(response => {
       console.log(response);
       this.data = response["features"];
@@ -156,7 +156,7 @@ export class ListeProductPage implements OnInit {
           text: 'Ok',
           handler: (data) => {
 
-            this.http.get("http://localhost:9091/requestAny/delete from public.product  where id = " +  item.id)
+            this.http.get("http://192.168.8.102:9091/requestAny/delete from public.product  where id = " +  item.id)
             .subscribe(response => {
               console.log(response);
               this.data = response["features"];
@@ -199,7 +199,7 @@ export class ListeProductPage implements OnInit {
           handler: (data) => {
 
             console.log(data["productName"]);
-            this.http.get("http://localhost:9091/requestAny/insert into  public.product(adaccountid,name) values ('"+this.utilisateur["adaccount"]["id"]+"','"+data["productName"]+"')")
+            this.http.get("http://192.168.8.102:9091/requestAny/insert into  public.product(adaccountid,name) values ('"+this.utilisateur["adaccount"]["id"]+"','"+data["productName"]+"')")
             .subscribe(response => {
               console.log(response);
               this.data = response["features"];
@@ -244,7 +244,7 @@ export class ListeProductPage implements OnInit {
           handler: (data) => {
 
             console.log(data["productName"]);
-            this.http.get("http://localhost:9091/requestAny/update public.product set name = '" + data["productName"] + "' where id = " +  item.id)
+            this.http.get("http://192.168.8.102:9091/requestAny/update public.product set name = '" + data["productName"] + "' where id = " +  item.id)
             .subscribe(response => {
               console.log(response);
               this.data = response["features"];

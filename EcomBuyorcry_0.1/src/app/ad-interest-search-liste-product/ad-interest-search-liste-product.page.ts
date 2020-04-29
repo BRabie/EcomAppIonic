@@ -69,7 +69,7 @@ export class AdInterestSearchListeProductPage implements OnInit {
   getData(){
     //this.utilisateurProvider.emitUtilisateur();
 
-    this.http.get("http://localhost:9091/requestAny/select * from public.product where adaccountid = '"+this.utilisateur["adaccount"]["id"]+"'")
+    this.http.get("http://192.168.8.102:9091/requestAny/select * from public.product where adaccountid = '"+this.utilisateur["adaccount"]["id"]+"'")
     .subscribe(response => {
       console.log(response);
       this.data = response["features"];
