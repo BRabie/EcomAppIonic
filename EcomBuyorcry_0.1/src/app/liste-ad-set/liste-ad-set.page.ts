@@ -1,5 +1,5 @@
 import { Component, OnInit, Inject } from '@angular/core';
-import { NavParams ,NavController} from '@ionic/angular';
+import { NavParams ,NavController, ToastController} from '@ionic/angular';
 import { UtilisateurService } from '../services/utilisateur.service';
 import { Subscription } from 'rxjs';
 import { HttpClient } from '@angular/common/http';
@@ -20,7 +20,8 @@ export class ListeAdSetPage implements OnInit {
   constructor(
     public http :HttpClient,
     public navCtrl: NavController, 
-    public utilisateurProvider: UtilisateurService
+    public utilisateurProvider: UtilisateurService,
+    public toastController: ToastController
     ) {
 
       this.utilisateurProvider.getUser().then(user =>{
@@ -66,5 +67,31 @@ export class ListeAdSetPage implements OnInit {
     this.utilisateurProvider.updateUtilisateur(this.utilisateur);
     //this.navCtrl.navigateForward("liste-adset");
 
+    this.presentToastWithOptions(item);
   }
+
+  async presentToastWithOptions(item : any) {
+    const toast = await this.toastController.create({
+      //header: 'Toast header',
+      message: 'Current Ad Set : <b> ' +  item["name"] + "</b>" ,
+      color : "success",
+      duration: 1000,
+      mode:"ios",
+      position:"top",
+      buttons: [
+        {
+          text: 'dismiss',
+          role: 'cancel',
+          //icon:'close-circle',
+          //color: "red",
+          handler: () => {
+            console.log('Cancel clicked');
+          },
+          cssClass : "toast-color-dismiss"
+        }
+      ]
+    });
+    toast.present();
+  }
+
 }

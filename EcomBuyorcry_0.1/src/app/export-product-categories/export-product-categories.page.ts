@@ -202,5 +202,8 @@ export class ExportProductCategoriesPage implements OnInit {
   trackByFn(index: any, item: any) {
     return index;
   }
+  refreshRowTable(){
+    console.log(this.columns);
+  }
 
 }

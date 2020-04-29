@@ -44,8 +44,8 @@
           <img src="https://gravatar.com/avatar/dba6bae8c566f9d4041fb9cd9ada7741?d=identicon&f=y">
         </ion-avatar>
         <ion-label>
-          <h3>Name : {{item.name}}</h3>
-          <p>ID : {{item.id}}</p>
+          <h3><b>Name : </b>{{item.name}}</h3>
+          <p><b>ID : </b>{{item.id}}</p>
         </ion-label>
   
       </ion-item>
@@ -55,16 +55,16 @@
       <ion-item-options side="end">
 
         <ion-item-option (click)="exportViewProductCategories()" color="success">
-          <ion-icon slot="icon-only" (click)="editProduct($event,item)" name="newspaper"> </ion-icon>
+          <ion-icon slot="icon-only"  name="newspaper"> </ion-icon>
         </ion-item-option>
 
 
         <ion-item-option (click)="editProduct($event,item)" color="primary">
-          <ion-icon slot="icon-only" (click)="editProduct($event,item)" name="create"> </ion-icon>
+          <ion-icon slot="icon-only" name="create"> </ion-icon>
         </ion-item-option>
 
         <ion-item-option (click)="deleteProduct($event,item)" color="danger">
-          <ion-icon slot="icon-only" (click)="deleteProduct($event,item)" name="trash"> </ion-icon>
+          <ion-icon slot="icon-only"  name="trash"> </ion-icon>
         </ion-item-option>
 
       </ion-item-options>
