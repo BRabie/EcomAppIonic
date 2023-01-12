@@ -58,7 +58,7 @@
     "es6-promise-plugin": "^4.2.2",
     "firebase": "^7.14.2",
     "ng2-charts": "^2.3.0",
-    "ngx-papaparse": "^3.0.4",
+    "ngx-papaparse": "^6.0.2",
     "rxjs": "^6.5.5",
     "sharp": "^0.24.1",
     "tslib": "^1.9.0",
